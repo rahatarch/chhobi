@@ -22,10 +22,32 @@ fn crop_to_square(img: &DynamicImage) -> DynamicImage {
 fn main() {
     let args: Vec<String> = std::env::args().collect();
 
+    let help = r"chhobi — batch crop and resize images for passport/stamp printing
+
+Usage:
+  chhobi --input <folder> --output <zip-file>
+
+Flags:
+  --input   <folder>     Directory containing JPG/PNG images
+  --output  <zip-file>   Path for the output ZIP archive
+  --help                 Show this help message and exit
+  --version              Show version information and exit
+";
+
+    if args.iter().any(|a| a == "--help" || a == "-h") {
+        print!("{}", help);
+        return;
+    }
+
+    if args.iter().any(|a| a == "--version" || a == "-V") {
+        println!("chhobi {}", env!("CARGO_PKG_VERSION"));
+        return;
+    }
+
     let input = match args.iter().position(|a| a == "--input").and_then(|i| args.get(i + 1)) {
         Some(v) => v.clone(),
         None => {
-            eprintln!("Usage: chhobi --input <folder> --output <zip-file>");
+            eprint!("{}", help);
             std::process::exit(1);
         }
     };
@@ -33,7 +55,7 @@ fn main() {
     let output = match args.iter().position(|a| a == "--output").and_then(|i| args.get(i + 1)) {
         Some(v) => v.clone(),
         None => {
-            eprintln!("Usage: chhobi --input <folder> --output <zip-file>");
+            eprint!("{}", help);
             std::process::exit(1);
         }
     };

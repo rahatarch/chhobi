@@ -36,26 +36,8 @@ Chhobi does three things to every photo:
 2. **Creates a passport size** — 600 pixels wide by 600 pixels tall
 3. **Creates a stamp size** — 300 pixels wide by 300 pixels tall
 
-Both sizes go into a single ZIP file, organised into folders:
-
-```
-output.zip
-├── passport/
-│   ├── student-01.jpg  (600×600)
-│   ├── student-02.jpg  (600×600)
-│   └── ...
-└── stamp/
-    ├── student-01.jpg  (300×300)
-    ├── student-02.jpg  (300×300)
-    └── ...
-```
-
-## Step 4: Check You Have Enough Space
-
-Each photo creates two new images. A folder of 100 photos will produce 200 images inside the ZIP. The total ZIP size is usually smaller than the original photos because the images are resized down.
-
 ## Important Notes
 
 - **Your original photos are never changed.** Chhobi only reads them.
 - **The output folder must be writable.** Make sure you have permission to create files there.
-- **Folder names with spaces** work fine if you put them in quotes (see the Usage guide).
+- **Chhobi only scans the folder you specify.** It does not look inside subfolders.

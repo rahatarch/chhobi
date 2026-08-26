@@ -14,6 +14,8 @@ chhobi --input "path/to/photo/folder" --output "my-photos.zip"
 |------|---------|
 | `--input` | The folder containing your original photos |
 | `--output` | The name of the ZIP file to create |
+| `--help` | Show all available options and usage information |
+| `--version` | Display the current version of Chhobi |
 
 ## Real Example
 
@@ -57,6 +59,6 @@ Open the ZIP file and you'll see two folders:
 
 ## Tips
 
-- **Use quotes around paths** that contain spaces
-- **Keep the original folder** — Chhobi never deletes or modifies your originals
 - **Processing 500+ photos?** Chhobi uses all your computer's cores and will still finish in seconds
+- **If output.zip already exists,** Chhobi will overwrite it without asking.
+- **If an image is corrupted or fails to process,** Chhobi skips it and continues with the rest. A warning message will show which file was skipped.

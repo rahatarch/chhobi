@@ -7,7 +7,7 @@ Chhobi can't find any supported photos in your folder.
 **Check:**
 - Does the folder exist? Type the full path to be sure.
 - Are your photos `.jpg`, `.jpeg`, or `.png`? Other formats are ignored.
-- Are the files inside the folder (not in a subfolder)? Chhobi only looks in the folder you specify.
+- Are the files inside the folder (not in a subfolder)?
 
 **Fix:**
 ```bash

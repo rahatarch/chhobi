@@ -19,7 +19,7 @@
 
 ### Option 2: Install from local source code (for advanced users)
 
-If you have Rust installed, you can install Chhobi directly from the source folder:
+If you have Rust installed, you can install Chhobi directly from the source folder. **Minimum Rust version: 1.70.0** (check with `rustc --version`).
 
 1. Open a terminal and navigate to the **chhobi** folder (the one containing `Cargo.toml`):
 
@@ -41,23 +41,10 @@ chhobi --version
 
 This installs Chhobi from the code on your computer, not from the internet. Once installed, the `chhobi` command will be available globally in any terminal.
 
-## Make It Easy to Run (Optional)
+## How to Uninstall
 
-### Windows
-Rename the file to `chhobi.exe` so it's easier to type.
-
-### macOS / Linux
-Make the file executable:
-
-```bash
-chmod +x chhobi-linux
-```
-
-Then rename it to `chhobi` for convenience:
-
-```bash
-mv chhobi-linux chhobi
-```
+- **If you installed from source:** Run `cargo uninstall chhobi` in any terminal.
+- **If you downloaded the executable:** Simply delete the file.
 
 ## How to Verify It's Installed
 
