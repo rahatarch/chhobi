@@ -1,0 +1,10 @@
+[package]
+name = "chhobi"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+image = "0.25"
+rayon = "1.12"
+zip = "8.6"
+ignore = "0.4"
