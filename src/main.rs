@@ -79,6 +79,8 @@ Flags:
         }
     }
 
+    let mut unsupported: Vec<String> = Vec::new();
+
     let paths: Vec<_> = ignore::WalkBuilder::new(input_path)
         .standard_filters(false)
         .build()
@@ -92,17 +94,31 @@ Flags:
             if matches!(ext.as_str(), "jpg" | "jpeg" | "png") {
                 Some(path.to_path_buf())
             } else {
+                if let Some(name) = path.file_name().and_then(|s| s.to_str()) {
+                    unsupported.push(name.to_string());
+                }
                 None
             }
         })
         .collect();
+
+    if let Some(name) = unsupported.first() {
+        eprintln!("Ignoring unsupported file: {}", name);
+        for name in unsupported.iter().skip(1) {
+            eprintln!("Ignoring unsupported file: {}", name);
+        }
+    }
 
     if paths.is_empty() {
         eprintln!("No images found in {}", input);
         std::process::exit(1);
     }
 
+    let unsupported_count = unsupported.len();
     eprintln!("Found {} images. Processing...", paths.len());
+    if unsupported_count > 0 {
+        eprintln!("Ignoring {} unsupported file(s).", unsupported_count);
+    }
 
     struct FileResult {
         name: String,
@@ -292,7 +308,7 @@ Flags:
     }
 
     eprintln!("Done! Archive created: {}", output);
-    eprintln!("Processed: {} images, Skipped: {} files", processed, skipped);
+    eprintln!("Processed: {} images, Skipped: {} files, Unsupported: {} files", processed, skipped, unsupported_count);
     if !skip_reasons.is_empty() {
         for r in &skip_reasons {
             eprintln!("  {}", r);
