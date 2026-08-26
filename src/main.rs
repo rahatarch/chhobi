@@ -2,12 +2,22 @@ use std::io::{Cursor, Write};
 use std::path::Path;
 use std::fs::File;
 
+use image::GenericImageView;
+use image::DynamicImage;
 use image::imageops::FilterType;
 use image::ImageFormat;
 use rayon::prelude::*;
 use zip::write::SimpleFileOptions;
 use zip::CompressionMethod;
 use zip::ZipWriter;
+
+fn crop_to_square(img: &DynamicImage) -> DynamicImage {
+    let (w, h) = img.dimensions();
+    let size = w.min(h);
+    let x = (w - size) / 2;
+    let y = (h - size) / 2;
+    img.crop_imm(x, y, size, size)
+}
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -67,8 +77,10 @@ fn main() {
 
             let img = image::open(path).ok()?;
 
-            let passport = img.resize_exact(600, 600, FilterType::Lanczos3);
-            let stamp = img.resize_exact(300, 300, FilterType::Lanczos3);
+            let squared = crop_to_square(&img);
+
+            let passport = squared.resize_exact(600, 600, FilterType::Lanczos3);
+            let stamp = squared.resize_exact(300, 300, FilterType::Lanczos3);
 
             let mut passport_buf = Cursor::new(Vec::new());
             passport.write_to(&mut passport_buf, format).ok()?;
