@@ -2,16 +2,11 @@ use std::path::Path;
 
 use rayon::prelude::*;
 
-mod cli;
-mod image_ops;
-mod pipeline;
-mod archive;
-
 fn main() {
-    let (input, output) = cli::parse_args();
+    let (input, output) = chhobi::cli::parse_args();
     let input_path = Path::new(&input);
 
-    let (paths, unsupported) = pipeline::walk_images(input_path);
+    let (paths, unsupported) = chhobi::pipeline::walk_images(input_path);
     let unsupported_count = unsupported.len();
 
     if paths.is_empty() {
@@ -27,12 +22,12 @@ fn main() {
         eprintln!("Ignoring {} unsupported file(s).", unsupported_count);
     }
 
-    let results: Vec<pipeline::FileResult> = paths
+    let results: Vec<chhobi::pipeline::FileResult> = paths
         .par_iter()
-        .map(|path| pipeline::process_file(path))
+        .map(|path| chhobi::pipeline::process_file(path))
         .collect();
 
-    let summary = pipeline::aggregate_results(&results);
+    let summary = chhobi::pipeline::aggregate_results(&results);
 
     if summary.processed == 0 {
         eprintln!("No images processed successfully. Nothing to save.");
@@ -42,7 +37,7 @@ fn main() {
         std::process::exit(1);
     }
 
-    let deduped = pipeline::dedup_results(&results);
-    archive::create_zip(&output, &deduped);
-    cli::print_summary(summary.processed, summary.skipped, unsupported_count, &summary.skip_reasons, &output);
+    let deduped = chhobi::pipeline::dedup_results(&results);
+    chhobi::archive::create_zip(&output, &deduped);
+    chhobi::cli::print_summary(summary.processed, summary.skipped, unsupported_count, &summary.skip_reasons, &output);
 }

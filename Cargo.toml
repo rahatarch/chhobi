@@ -3,6 +3,14 @@ name = "chhobi"
 version = "0.0.1"
 edition = "2024"
 
+[lib]
+name = "chhobi"
+path = "src/lib.rs"
+
+[[bin]]
+name = "chhobi-cli"
+path = "src/main.rs"
+
 [dependencies]
 image = "0.25"
 rayon = "1.12"
