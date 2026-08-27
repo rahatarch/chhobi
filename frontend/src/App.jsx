@@ -84,7 +84,7 @@ function App() {
   }
 
   return (
-    <>
+    <div className="app-container">
       <h1 className="title">Chhobi</h1>
       <p className="subtitle">Bulk Image Resizer</p>
 
@@ -123,7 +123,7 @@ function App() {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
